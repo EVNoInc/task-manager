@@ -105,7 +105,6 @@ const avatar = multer({
         fileSize: 1000000,
     },
     fileFilter(req, file, cb) {
-        console.log('in file filter');
         if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
             return cb(new Error('File must be an image'));
         }
@@ -121,7 +120,8 @@ router.post('/user/me/avatar', auth, avatar.single('avatar'), async (req, res) =
 
     res.send();
 }, (error, req, res, next) => {
-    res.status(400).send({ error: error.message });
+    console.log(error);
+    res.status(400).send(error);
 })
 
 router.delete('/user/me/avatar', auth, async (req, res) => {
